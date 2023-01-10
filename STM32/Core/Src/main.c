@@ -22,7 +22,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "uart_printf.h"
+#include "Scheduler.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +46,7 @@ TIM_HandleTypeDef htim2;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-
+uint32_t id1,id2;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -54,7 +55,8 @@ static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-
+void toggleLed(void);
+void toggleLed2();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -93,11 +95,15 @@ int main(void)
   MX_TIM2_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  init_uart_printf(&huart1);
+  HAL_TIM_Base_Start_IT(&htim2);
+  SCH_Init(&htim2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  id1 = SCH_Add_Task(toggleLed, 500, 250);
+  id2 = SCH_Add_Task(toggleLed2, 510, 500);
   while (1)
   {
     /* USER CODE END WHILE */
@@ -245,7 +251,26 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void toggleLed() {
+	HAL_GPIO_TogglePin(DEBUG2_GPIO_Port, DEBUG2_Pin);
+}
+void toggleLed2() {
+	HAL_GPIO_TogglePin(DEBUG_GPIO_Port, DEBUG_Pin);
+}
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	//HAL_ResumeTick(); // resume systick from sleep
+//	static uint32_t count = 1000;
+	if(htim->Instance == TIM2) {
+		SCH_Update();
+//		if(count) {
+//			count--;
+//			if(count == 0) {
+//				count = 1000;
+//				SCH_Delete_Task(id1);
+//			}
+//		}
+	}
+}
 /* USER CODE END 4 */
 
 /**

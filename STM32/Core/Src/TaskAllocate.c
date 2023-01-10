@@ -58,4 +58,5 @@ void TA_free(struct Node* node) {
 }
 
 uint32_t TA_remaining(void) {
-
+	return remain;
+}
