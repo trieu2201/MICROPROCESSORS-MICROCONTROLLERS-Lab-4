@@ -58,12 +58,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define DEBUG2_Pin_Pin GPIO_PIN_2
-#define DEBUG2_Pin_GPIO_Port GPIOA
-#define DEBUG_Pin_Pin GPIO_PIN_3
-#define DEBUG_Pin_GPIO_Port GPIOA
-#define DEBUG3_Pin_Pin GPIO_PIN_4
-#define DEBUG3_Pin_GPIO_Port GPIOA
+#define DEBUG2_Pin GPIO_PIN_2
+#define DEBUG2_GPIO_Port GPIOA
+#define DEBUG_Pin GPIO_PIN_3
+#define DEBUG_GPIO_Port GPIOA
+#define DEBUG3_Pin GPIO_PIN_4
+#define DEBUG3_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
